@@ -1,0 +1,120 @@
+swagger: "2.0"
+info:
+  description: user account management API
+  version: 1.0.0
+  title: AMT User Management API for ProjectTwo
+host: localhost:7070
+basePath: /api
+schemes:
+  - http
+paths:
+
+  /users:
+    post:
+      operationId: createAccount
+      description: create new user account if user is admin
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: token from the login
+        - in: body
+          name: user
+          description: user account informations
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+
+      responses:
+        200:
+          description: user account creation successfull
+        400:
+          description: user account creation fail,Malformed Request
+        401:
+          description: Unauthorized
+
+
+  /login:
+    post:
+      operationId: userLogin
+      description: login into  user account
+
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          description: credentials of the user
+          required: true
+          schema:
+            $ref: '#/definitions/Credentials'
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: operation success
+        403:
+          description: unauthorized access
+        404:
+          description: user account not found
+
+  /users/{email}/password-settings:
+    post:
+      operationId: modifyPassword
+      description: change the password of the user
+      parameters:
+        - in: path
+          name: email
+          required: true
+          type: string
+        - in: body
+          name: newPassword
+          description: password to update
+          required: true
+          schema:
+           $ref: '#/definitions/newPassword'
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: token from the login
+      responses:
+        200:
+          description: request sent
+        404:
+          description: user account not found
+
+definitions:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+
+    Credentials:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    newPassword:
+       type: string
+
+securityDefinitions:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
