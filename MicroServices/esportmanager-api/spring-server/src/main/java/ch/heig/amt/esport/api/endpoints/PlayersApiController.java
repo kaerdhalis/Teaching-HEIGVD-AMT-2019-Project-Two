@@ -23,7 +23,11 @@ public class PlayersApiController implements PlayersApi {
 
     @Autowired
     PlayerRepository playerRepository;
-
+    /**
+     * creates a player and saves it to the database
+     * @param player the player to be added
+     * @return a response entity corresponding to the success or failure of the operation
+     */
     public ResponseEntity<Object> createPlayer(@ApiParam(value = "", required = true) @Valid @RequestBody Player player) {
         PlayerEntity newPlayerEntity = toPlayerEntity(player);
         playerRepository.save(newPlayerEntity);
@@ -35,6 +39,12 @@ public class PlayersApiController implements PlayersApi {
 
         return ResponseEntity.created(location).build();
     }
+    /**
+     *  Deletes a player using a player id
+     * @param playerId the id of the player to delete
+     * @return a response entity corresponding to the success or failure of the operation
+     */
+
     public ResponseEntity deletePlayer(long playerId) {
 
         if(playerRepository.existsById(playerId)) {
@@ -46,6 +56,12 @@ public class PlayersApiController implements PlayersApi {
         }
     }
 
+    /**
+     * edits a player using a player id and new player valuse
+     * @param playerId the id of the player to edit
+     * @param player the new values
+     * @return a response entity corresponding to the success or failure of the operation
+     */
 
     public ResponseEntity editPlayer(long playerId,Player player) {
 
@@ -60,6 +76,12 @@ public class PlayersApiController implements PlayersApi {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * get a player by its id
+     * @param playerId the id of the player we want to fetch
+     * @return a response entity corresponding to the success or failure of the operation
+     */
     public ResponseEntity<Player> getPlayer(long playerId) {
 
         if(playerRepository.existsById(playerId)) {
@@ -69,6 +91,11 @@ public class PlayersApiController implements PlayersApi {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     *  gets all the existing players
+     * @return a response entity with a list of all the players
+     */
     public ResponseEntity<List<Player>> getPlayers() {
         List<Player> players = new ArrayList<>();
         for (PlayerEntity playerEntity : playerRepository.findAll()) {
@@ -78,7 +105,11 @@ public class PlayersApiController implements PlayersApi {
         return ResponseEntity.ok(players);
     }
 
-
+    /**
+     * transforms a player into a TeamEntity
+     * @param team the player to transform
+     * @return the corresponding teamEntity
+     */
     private PlayerEntity toPlayerEntity(Player player) {
         PlayerEntity entity = new PlayerEntity();
         entity.setFirst_name(player.getFirstName());
@@ -86,7 +117,11 @@ public class PlayersApiController implements PlayersApi {
         entity.setGamertag(player.getGamertag());
         return entity;
     }
-
+    /**
+     * * transforms a PlayerEntity into a player
+     * @param entity the PlayerEntity to transform
+     * @return the corresponding Player
+     */
     private Player toPlayer(PlayerEntity entity) {
         Player player = new Player();
         player.setFirstName(entity.getFirst_name());
