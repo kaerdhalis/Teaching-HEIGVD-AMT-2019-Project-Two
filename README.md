@@ -31,8 +31,10 @@ Our application is composed of two backend REST services, one to manage differen
 ## Non-functional requirements
 
 * **Automation**
-  * The application can be launched by executing the RunApplication.sh script and then going to localhost:8080/auth for the first API and localhost:8080/api  to access the second API.
+  * The application can be launched by executing the **RunApplication.sh** script and then going to localhost:8080/auth for the first API and localhost:8080/api  to access the second API.
 * **Testing**
   * Due to a lack of time we havent implemented tests
 
 * **Documentation**
+
+[Documentation on Implementation](https://github.com/goturak/Teaching-HEIGVD-AMT-2019-Project-Two/blob/master/docs/implementation.md)
