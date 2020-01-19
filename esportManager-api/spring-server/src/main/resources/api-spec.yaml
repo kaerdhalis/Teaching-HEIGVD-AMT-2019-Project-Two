@@ -1,0 +1,169 @@
+swagger: '2.0'
+info:
+  version: '0.1.0'
+  title: Esport API
+  description: An API to demonstrate Swagger and Spring Boot
+host: localhost:8080
+basePath: /esport
+schemes:
+  - http
+paths:
+  /players:
+    post:
+      description: create a player
+      operationId: createPlayer
+      consumes:
+        - application/json
+      parameters:
+        - name: player
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Player'
+      responses:
+        '201':
+          description: created
+          schema:
+            type: object
+    get:
+      description: get the list of all player
+      operationId: getPlayers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Player'
+
+  /players/{playerId}:
+    parameters:
+    - in: path
+      name: playerId
+      required: true
+      type: long
+    get:
+      description: get player by id
+      operationId: getPlayer
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: player successfully fetched
+          schema:
+            $ref: '#/definitions/Player'
+        '404':
+          description: player doesnt exist
+    post:
+      description: edit a player by id
+      operationId: editPlayer
+      consumes:
+      - application/json
+      parameters:
+      - name: player
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Player'
+      responses:
+        '200':
+          description: player successfully edited
+        '404':
+          description: player doesnt exist
+    delete:
+      description: delete a Player
+      operationId: deletePlayer
+      responses:
+        '204':
+          description: player successfully deleted
+        '404':
+          description: player doesnt exist
+
+  /teams:
+    post:
+      description: create a team
+      operationId: createTeam
+      consumes:
+      - application/json
+      parameters:
+      - name: team
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Team'
+      responses:
+        '201':
+          description: created
+          schema:
+            type: object
+    get:
+      description: get the list of all teams
+      operationId: getTeams
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Team'
+  /teams/{teamId}:
+    parameters:
+    - in: path
+      name: teamId
+      required: true
+      type: long
+    get:
+      description: get team by id
+      operationId: getTeam
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: team successfully fetched
+          schema:
+            $ref: '#/definitions/Team'
+        '404':
+          description: team doesnt exist
+    post:
+      description: edit a team by id
+      operationId: editTeam
+      consumes:
+      - application/json
+      parameters:
+      - name: team
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Team'
+      responses:
+        '200':
+          description: team successfully edited
+        '404':
+          description: team doesnt exist
+    delete:
+      description: delete a team
+      operationId: deleteTeam
+      responses:
+        '204':
+          description: team successfully deleted
+        '404':
+          description: team doesnt exist not found
+definitions:
+  Player:
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      gamertag:
+        type: string
+  Team:
+    type: object
+    properties:
+      name:
+        type: string
