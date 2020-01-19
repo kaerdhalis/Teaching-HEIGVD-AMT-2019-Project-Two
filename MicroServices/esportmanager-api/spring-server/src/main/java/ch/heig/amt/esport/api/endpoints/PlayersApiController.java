@@ -41,7 +41,7 @@ public class PlayersApiController implements PlayersApi {
     }
     /**
      *  Deletes a player using a player id
-     * @param teamId the id of the team to delete
+     * @param playerId the id of the player to delete
      * @return a response entity corresponding to the success or failure of the operation
      */
 
@@ -58,7 +58,7 @@ public class PlayersApiController implements PlayersApi {
 
     /**
      * edits a player using a player id and new player valuse
-     * @param teamId the id of the player to edit
+     * @param playerId the id of the player to edit
      * @param player the new values
      * @return a response entity corresponding to the success or failure of the operation
      */
@@ -79,7 +79,7 @@ public class PlayersApiController implements PlayersApi {
 
     /**
      * get a player by its id
-     * @param teamId the id of the player we want to fetch
+     * @param playerId the id of the player we want to fetch
      * @return a response entity corresponding to the success or failure of the operation
      */
     public ResponseEntity<Player> getPlayer(long playerId) {
