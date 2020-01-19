@@ -2,15 +2,13 @@ package ch.heig.amt.userManager.api.endpoints;
 
 import ch.heig.amt.userManager.api.UsersApi;
 import ch.heig.amt.userManager.api.model.Credentials;
+import ch.heig.amt.userManager.api.model.User;
 import ch.heig.amt.userManager.business.AuthentificationService;
 import ch.heig.amt.userManager.business.AuthorisationService;
 import ch.heig.amt.userManager.entities.UserEntity;
-import ch.heig.amt.userManager.api.model.User;
 import ch.heig.amt.userManager.repositories.UserRepository;
-import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
+
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
+
+@Controller
 public class UserApiController implements UsersApi {
 
     @Autowired
