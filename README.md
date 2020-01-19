@@ -37,4 +37,4 @@ Our application is composed of two backend REST services, one to manage differen
 
 * **Documentation**
 
-[Documentation on Implementation](https://github.com/goturak/Teaching-HEIGVD-AMT-2019-Project-Two/blob/master/docs/implementation.md)
+[Documentation on Implementation](https://github.com/kaerdhalis/Teaching-HEIGVD-AMT-2019-Project-Two/blob/master/docs/implementation.md)
