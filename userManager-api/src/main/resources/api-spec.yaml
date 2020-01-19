@@ -3,13 +3,28 @@ info:
   description: user account management API
   version: 1.0.0
   title: AMT User Management API for ProjectTwo
-host: localhost:7070
-basePath: /api
+host: localhost:8080
+basePath: /auth
 schemes:
   - http
 paths:
 
   /users:
+
+    get:
+      description: get the list of all users
+      operationId: getUsers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: users retrieved successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        '403':
+          description: forbidden
     post:
       operationId: createAccount
       description: create new user account if user is admin
@@ -27,6 +42,8 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/User'
+
+
 
       responses:
         200:

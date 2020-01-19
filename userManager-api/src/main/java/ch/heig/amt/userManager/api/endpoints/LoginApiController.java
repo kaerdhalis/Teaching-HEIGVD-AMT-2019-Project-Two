@@ -59,9 +59,5 @@ public class LoginApiController implements LoginApi {
         user.setPassword(entity.getPassword());
         user.setRole(entity.getRole());
         return user;
-
-
-
-
     }
 }

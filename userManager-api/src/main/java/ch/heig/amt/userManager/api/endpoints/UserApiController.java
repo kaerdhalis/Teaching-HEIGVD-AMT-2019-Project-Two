@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-26T19:36:34.802Z")
@@ -85,5 +85,33 @@ public class UserApiController implements UsersApi {
         userRepository.save(entity);
 
         return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    public ResponseEntity<List<User>> getUsers() {
+
+
+
+            List<User> users= new ArrayList<>();
+            for (UserEntity userEntity : userRepository.findAll()) {
+                users.add(toUser(userEntity));
+            }
+            return ResponseEntity.ok(users);
+
+    }
+
+    private User toUser(UserEntity entity) {
+
+        User user = new User();
+        user.setEmail(entity.getEmail());
+        user.setFirstName(entity.getFirstName());
+        user.setLastName(entity.getLastName());
+        user.setPassword(entity.getPassword());
+        user.setRole(entity.getRole());
+        return user;
+
+
+
+
     }
 }

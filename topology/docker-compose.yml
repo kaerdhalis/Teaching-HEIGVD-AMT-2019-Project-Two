@@ -1,0 +1,65 @@
+version: '3'
+services:
+  
+  users-db:
+    build: ./images/mysql_users
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+     - "3307:3306"
+
+  esport-db:
+    build: ./images/mysql_esport
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+     - "3306:3306"
+  
+  phpmyadmin:
+    build: ./images/phpmyadmin
+    environment:
+     - MYSQL_ROOT_PASSWORD=root
+     - PMA_HOSTS=esport-db,users-db
+    ports:
+     - "6060:80"
+
+  reverse-proxy:
+    image: traefik:v2.0.6
+    restart: on-failure
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      # Dynamic configuration
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Static configuration
+      - ./traefik.toml:/etc/traefik/traefik.toml
+
+  team_esport:
+    build: ./images/Team_Esport/
+    restart: on-failure
+    environment:
+        spring_profiles_active: docker
+        SECRET_KEY: ${SECRET_KEY}
+    depends_on:
+      - users-db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.main.entrypoints=web"
+      - "traefik.http.routers.main.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.services.main.loadbalancer.server.port=8080"
+
+  team_esport_users:
+    build: ./images/Team_Esport_users/
+    restart: on-failure
+    environment:
+        spring_profiles_active: docker
+        SECRET_KEY: ${SECRET_KEY}
+    depends_on:
+      - users-db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auth.entrypoints=web"
+      - "traefik.http.routers.auth.rule=Host(`localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.services.auth.loadbalancer.server.port=8080"
+
